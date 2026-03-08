@@ -5,6 +5,7 @@ using StoreMaster.Core.Interfaces;
 using StoreMaster.Core.Services;
 using StoreMaster.Infrastructure.Data;
 using StoreMaster.Infrastructure.Repositories;
+using StoreMaster.Web.Mapping;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -51,8 +52,10 @@ builder.Services.ConfigureApplicationCookie(options =>
 });
 
 // AutoMapper (busca perfiles en todos los ensamblados)
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
+builder.Services.AddAutoMapper(cfg =>
+{
+    cfg.AddProfile<MappingProfile>();
+});
 var app = builder.Build();
 
 // ── Pipeline HTTP ────────────────────────────────────────
