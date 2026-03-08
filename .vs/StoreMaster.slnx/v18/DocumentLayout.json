@@ -1,0 +1,139 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Martin\\Documents\\Portafolio .NET\\StoreMaster\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{D0F37D8B-49F7-4CEF-F53C-188B0F7B3356}|StoreMaster.Web\\StoreMaster.Web.csproj|c:\\users\\martin\\documents\\portafolio .net\\storemaster\\storemaster.web\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D0F37D8B-49F7-4CEF-F53C-188B0F7B3356}|StoreMaster.Web\\StoreMaster.Web.csproj|solutionrelative:storemaster.web\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{75DB8C4B-46DE-067F-615B-F13C83A7F341}|StoreMaster.Core\\StoreMaster.Core.csproj|c:\\users\\martin\\documents\\portafolio .net\\storemaster\\storemaster.core\\services\\categoriaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{75DB8C4B-46DE-067F-615B-F13C83A7F341}|StoreMaster.Core\\StoreMaster.Core.csproj|solutionrelative:storemaster.core\\services\\categoriaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{75DB8C4B-46DE-067F-615B-F13C83A7F341}|StoreMaster.Core\\StoreMaster.Core.csproj|c:\\users\\martin\\documents\\portafolio .net\\storemaster\\storemaster.core\\interfaces\\icategoriarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{75DB8C4B-46DE-067F-615B-F13C83A7F341}|StoreMaster.Core\\StoreMaster.Core.csproj|solutionrelative:storemaster.core\\interfaces\\icategoriarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{75DB8C4B-46DE-067F-615B-F13C83A7F341}|StoreMaster.Core\\StoreMaster.Core.csproj|c:\\users\\martin\\documents\\portafolio .net\\storemaster\\storemaster.core\\interfaces\\icategoriaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{75DB8C4B-46DE-067F-615B-F13C83A7F341}|StoreMaster.Core\\StoreMaster.Core.csproj|solutionrelative:storemaster.core\\interfaces\\icategoriaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F457F6A5-C34F-4643-B6FF-ED24FDFC13E6}|StoreMaster.Infrastructure\\StoreMaster.Infrastructure.csproj|c:\\users\\martin\\documents\\portafolio .net\\storemaster\\storemaster.infrastructure\\repositories\\categoriarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F457F6A5-C34F-4643-B6FF-ED24FDFC13E6}|StoreMaster.Infrastructure\\StoreMaster.Infrastructure.csproj|solutionrelative:storemaster.infrastructure\\repositories\\categoriarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F457F6A5-C34F-4643-B6FF-ED24FDFC13E6}|StoreMaster.Infrastructure\\StoreMaster.Infrastructure.csproj|c:\\users\\martin\\documents\\portafolio .net\\storemaster\\storemaster.infrastructure\\repositories\\genericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F457F6A5-C34F-4643-B6FF-ED24FDFC13E6}|StoreMaster.Infrastructure\\StoreMaster.Infrastructure.csproj|solutionrelative:storemaster.infrastructure\\repositories\\genericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{75DB8C4B-46DE-067F-615B-F13C83A7F341}|StoreMaster.Core\\StoreMaster.Core.csproj|c:\\users\\martin\\documents\\portafolio .net\\storemaster\\storemaster.core\\interfaces\\igenericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{75DB8C4B-46DE-067F-615B-F13C83A7F341}|StoreMaster.Core\\StoreMaster.Core.csproj|solutionrelative:storemaster.core\\interfaces\\igenericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 171,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Martin\\Documents\\Portafolio .NET\\StoreMaster\\StoreMaster.Web\\Program.cs",
+              "RelativeDocumentMoniker": "StoreMaster.Web\\Program.cs",
+              "ToolTip": "C:\\Users\\Martin\\Documents\\Portafolio .NET\\StoreMaster\\StoreMaster.Web\\Program.cs",
+              "RelativeToolTip": "StoreMaster.Web\\Program.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABQAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-07T21:43:57.875Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "CategoriaService.cs",
+              "DocumentMoniker": "C:\\Users\\Martin\\Documents\\Portafolio .NET\\StoreMaster\\StoreMaster.Core\\Services\\CategoriaService.cs",
+              "RelativeDocumentMoniker": "StoreMaster.Core\\Services\\CategoriaService.cs",
+              "ToolTip": "C:\\Users\\Martin\\Documents\\Portafolio .NET\\StoreMaster\\StoreMaster.Core\\Services\\CategoriaService.cs",
+              "RelativeToolTip": "StoreMaster.Core\\Services\\CategoriaService.cs",
+              "ViewState": "AgIAABQAAAAAAAAAAAAwwCQAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-07T21:40:06.047Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ICategoriaService.cs",
+              "DocumentMoniker": "C:\\Users\\Martin\\Documents\\Portafolio .NET\\StoreMaster\\StoreMaster.Core\\Interfaces\\ICategoriaService.cs",
+              "RelativeDocumentMoniker": "StoreMaster.Core\\Interfaces\\ICategoriaService.cs",
+              "ToolTip": "C:\\Users\\Martin\\Documents\\Portafolio .NET\\StoreMaster\\StoreMaster.Core\\Interfaces\\ICategoriaService.cs",
+              "RelativeToolTip": "StoreMaster.Core\\Interfaces\\ICategoriaService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-07T21:38:05.529Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "CategoriaRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Martin\\Documents\\Portafolio .NET\\StoreMaster\\StoreMaster.Infrastructure\\Repositories\\CategoriaRepository.cs",
+              "RelativeDocumentMoniker": "StoreMaster.Infrastructure\\Repositories\\CategoriaRepository.cs",
+              "ToolTip": "C:\\Users\\Martin\\Documents\\Portafolio .NET\\StoreMaster\\StoreMaster.Infrastructure\\Repositories\\CategoriaRepository.cs",
+              "RelativeToolTip": "StoreMaster.Infrastructure\\Repositories\\CategoriaRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-07T21:29:28.515Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "GenericRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Martin\\Documents\\Portafolio .NET\\StoreMaster\\StoreMaster.Infrastructure\\Repositories\\GenericRepository.cs",
+              "RelativeDocumentMoniker": "StoreMaster.Infrastructure\\Repositories\\GenericRepository.cs",
+              "ToolTip": "C:\\Users\\Martin\\Documents\\Portafolio .NET\\StoreMaster\\StoreMaster.Infrastructure\\Repositories\\GenericRepository.cs",
+              "RelativeToolTip": "StoreMaster.Infrastructure\\Repositories\\GenericRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACkAAABaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-07T21:19:24.218Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ICategoriaRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Martin\\Documents\\Portafolio .NET\\StoreMaster\\StoreMaster.Core\\Interfaces\\ICategoriaRepository.cs",
+              "RelativeDocumentMoniker": "StoreMaster.Core\\Interfaces\\ICategoriaRepository.cs",
+              "ToolTip": "C:\\Users\\Martin\\Documents\\Portafolio .NET\\StoreMaster\\StoreMaster.Core\\Interfaces\\ICategoriaRepository.cs",
+              "RelativeToolTip": "StoreMaster.Core\\Interfaces\\ICategoriaRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAoAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-07T21:15:15.45Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "IGenericRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Martin\\Documents\\Portafolio .NET\\StoreMaster\\StoreMaster.Core\\Interfaces\\IGenericRepository.cs",
+              "RelativeDocumentMoniker": "StoreMaster.Core\\Interfaces\\IGenericRepository.cs",
+              "ToolTip": "C:\\Users\\Martin\\Documents\\Portafolio .NET\\StoreMaster\\StoreMaster.Core\\Interfaces\\IGenericRepository.cs",
+              "RelativeToolTip": "StoreMaster.Core\\Interfaces\\IGenericRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-07T21:11:20.528Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

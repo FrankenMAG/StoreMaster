@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="StoreMaster.Core/StoreMaster.Core.csproj" />
+  <Project Path="StoreMaster.Infrastructure/StoreMaster.Infrastructure.csproj" />
+  <Project Path="StoreMaster.Web/StoreMaster.Web.csproj" />
+</Solution>
