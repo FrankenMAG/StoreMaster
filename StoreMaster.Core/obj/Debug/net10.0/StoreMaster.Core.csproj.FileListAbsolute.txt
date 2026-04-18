@@ -10,3 +10,4 @@ C:\Users\Martin\Documents\Portafolio .NET\StoreMaster\StoreMaster.Core\obj\Debug
 C:\Users\Martin\Documents\Portafolio .NET\StoreMaster\StoreMaster.Core\obj\Debug\net10.0\StoreMaster.Core.pdb
 C:\Users\Martin\Documents\Portafolio .NET\StoreMaster\StoreMaster.Core\obj\Debug\net10.0\ref\StoreMaster.Core.dll
 C:\Users\Martin\Documents\Portafolio .NET\StoreMaster\StoreMaster.Core\obj\Debug\net10.0\StoreMaster.Core.csproj.AssemblyReference.cache
+C:\Users\Martin\Documents\Portafolio .NET\StoreMaster\StoreMaster.Core\obj\Debug\net10.0\StoreMaster.Core.sourcelink.json

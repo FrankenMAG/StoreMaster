@@ -18,9 +18,11 @@ builder.Services.AddDbContext<StoreDbContext>(options =>
 
 // Repositorios
 builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
+builder.Services.AddScoped<IProveedorRepository, ProveedorRepository>();
 
 // Servicios
 builder.Services.AddScoped<ICategoriaService, CategoriaService>();
+builder.Services.AddScoped<IProveedorService, ProveedorService>();
 
 // Identity
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>

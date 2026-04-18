@@ -15,3 +15,4 @@ C:\Users\Martin\Documents\Portafolio .NET\StoreMaster\StoreMaster.Infrastructure
 C:\Users\Martin\Documents\Portafolio .NET\StoreMaster\StoreMaster.Infrastructure\obj\Debug\net10.0\StoreMaster.Infrastructure.pdb
 C:\Users\Martin\Documents\Portafolio .NET\StoreMaster\StoreMaster.Infrastructure\obj\Debug\net10.0\StoreMaster.Infrastructure.genruntimeconfig.cache
 C:\Users\Martin\Documents\Portafolio .NET\StoreMaster\StoreMaster.Infrastructure\obj\Debug\net10.0\ref\StoreMaster.Infrastructure.dll
+C:\Users\Martin\Documents\Portafolio .NET\StoreMaster\StoreMaster.Infrastructure\obj\Debug\net10.0\StoreMaster.Infrastructure.sourcelink.json
