@@ -22,4 +22,6 @@ public class ClienteRepository : GenericRepository<Cliente>, IClienteRepository
             c.Email != null &&
             c.Email.ToLower() == email.ToLower() &&
             (!excludeId.HasValue || c.Id != excludeId.Value));
+    public async Task<int> GetTotalActivosAsync()
+    => await _dbSet.CountAsync(c => c.Activo);
 }

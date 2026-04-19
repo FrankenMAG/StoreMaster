@@ -43,4 +43,26 @@ public class ProductoRepository : GenericRepository<Producto>, IProductoReposito
         => await _dbSet.AnyAsync(p =>
             p.CodigoBarras == codigo &&
             (!excludeId.HasValue || p.Id != excludeId.Value));
+
+    public async Task<int> GetTotalActivosAsync()
+        => await _dbSet.CountAsync(p => p.Activo);
+
+    public async Task<IEnumerable<(string Nombre, int Total)>> GetTopProductosAsync(int top = 5)
+    {
+        var resultados = await _context.DetallesVenta
+            .Include(d => d.Producto)
+            .GroupBy(d => new { d.ProductoId, d.Producto.Nombre })
+            .Select(g => new
+            {
+                Nombre = g.Key.Nombre,
+                Total = g.Sum(d => d.Cantidad)
+            })
+            .OrderByDescending(x => x.Total)
+            .Take(top)
+            .ToListAsync();
+
+        return resultados.Select(x => (x.Nombre, x.Total));
+    }
+
+
 }

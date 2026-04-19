@@ -1,38 +1,266 @@
-﻿@{
+﻿@model StoreMaster.Web.ViewModels.DashboardViewModel
+@{
     ViewData["Title"] = "Dashboard";
 }
 
+<!-- Encabezado -->
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h4 class="mb-0 fw-bold">
         <i class="fas fa-tachometer-alt me-2 text-primary"></i>Dashboard
     </h4>
-    <span class="text-muted small">Bienvenido a StoreMaster</span>
+    <span class="text-muted small">
+        <i class="fas fa-calendar me-1"></i>
+        @DateTime.Now.ToString("dddd, dd 'de' MMMM 'de' yyyy",
+        new System.Globalization.CultureInfo("es-MX"))
+    </span>
 </div>
 
-<!-- KPI Cards (placeholder por ahora) -->
+<!-- ── KPI Cards ──────────────────────────────────────── -->
 <div class="row g-3 mb-4">
     <div class="col-md-3">
-        <div class="card p-3">
-            <div class="text-muted small">Ventas hoy</div>
-            <div class="fs-4 fw-bold text-success">$0.00</div>
+        <div class="card p-3 border-start border-success border-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <div class="text-muted small">Ventas hoy</div>
+                    <div class="fs-4 fw-bold text-success">
+                        $@Model.TotalVentasHoy.ToString("N2")
+                    </div>
+                    <div class="text-muted small">
+                        @Model.TotalVentasHoyCount transacción(es)
+                    </div>
+                </div>
+                <i class="fas fa-dollar-sign fa-2x text-success opacity-25"></i>
+            </div>
         </div>
     </div>
     <div class="col-md-3">
-        <div class="card p-3">
-            <div class="text-muted small">Productos</div>
-            <div class="fs-4 fw-bold text-primary">0</div>
+        <div class="card p-3 border-start border-primary border-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <div class="text-muted small">Productos activos</div>
+                    <div class="fs-4 fw-bold text-primary">@Model.TotalProductos</div>
+                    <div class="text-muted small">en inventario</div>
+                </div>
+                <i class="fas fa-box fa-2x text-primary opacity-25"></i>
+            </div>
         </div>
     </div>
     <div class="col-md-3">
-        <div class="card p-3">
-            <div class="text-muted small">Clientes</div>
-            <div class="fs-4 fw-bold text-info">0</div>
+        <div class="card p-3 border-start border-info border-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <div class="text-muted small">Clientes</div>
+                    <div class="fs-4 fw-bold text-info">@Model.TotalClientes</div>
+                    <div class="text-muted small">registrados</div>
+                </div>
+                <i class="fas fa-users fa-2x text-info opacity-25"></i>
+            </div>
         </div>
     </div>
     <div class="col-md-3">
-        <div class="card p-3">
-            <div class="text-muted small">Stock bajo</div>
-            <div class="fs-4 fw-bold text-danger">0</div>
+        <div class="card p-3 border-start border-danger border-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <div class="text-muted small">Stock bajo</div>
+                    <div class="fs-4 fw-bold text-danger">@Model.TotalStockBajo</div>
+                    <div class="text-muted small">producto(s) críticos</div>
+                </div>
+                <i class="fas fa-exclamation-triangle fa-2x text-danger opacity-25"></i>
+            </div>
         </div>
     </div>
 </div>
+
+<!-- ── Gráfica y Top Productos ───────────────────────── -->
+<div class="row g-3 mb-4">
+
+    <!-- Gráfica ventas 7 días -->
+    <div class="col-md-8">
+        <div class="card h-100">
+            <div class="card-header bg-dark text-white">
+                <i class="fas fa-chart-line me-2"></i>Ventas últimos 7 días
+            </div>
+            <div class="card-body">
+                <canvas id="graficaVentas" height="120"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Top 5 productos -->
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-header bg-dark text-white">
+                <i class="fas fa-trophy me-2"></i>Top productos vendidos
+            </div>
+            <div class="card-body p-0">
+                @if (Model.TopProductos.Any())
+                {
+                    <ul class="list-group list-group-flush">
+                        @foreach (var (nombre, total) in Model.TopProductos.Select((x, i) => (x.Nombre, x.Total)).Select((x, i) => (x, i)))
+                        {
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="badge bg-primary rounded-pill">@(total + 1)</span>
+                                    <span class="small">@nombre.Nombre</span>
+                                </div>
+                                <span class="badge bg-success rounded-pill">
+                                    @nombre.Total uds
+                                </span>
+                            </li>
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <div class="text-center text-muted py-4">
+                        <i class="fas fa-chart-bar fa-2x mb-2 d-block opacity-25"></i>
+                        Sin datos aún
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ── Últimas ventas y Stock bajo ──────────────────── -->
+<div class="row g-3">
+
+    <!-- Últimas ventas del día -->
+    <div class="col-md-7">
+        <div class="card">
+            <div class="card-header bg-dark text-white">
+                <i class="fas fa-history me-2"></i>Últimas ventas del día
+            </div>
+            <div class="card-body p-0">
+                @if (Model.UltimasVentas.Any())
+                {
+                    <table class="table table-hover mb-0">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Cliente</th>
+                                <th>Items</th>
+                                <th class="text-end">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var venta in Model.UltimasVentas)
+                            {
+                                <tr>
+                                    <td>
+                                        <a asp-controller="Ventas" asp-action="Detalle"
+                                           asp-route-id="@venta.Id" class="fw-semibold">
+                                            #@venta.Id
+                                        </a>
+                                    </td>
+                                    <td>@(venta.Cliente?.NombreCompleto ?? "General")</td>
+                                    <td class="text-muted small">@venta.Detalles.Count item(s)</td>
+                                    <td class="text-end fw-bold text-success">
+                                        $@venta.Total.ToString("N2")
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <div class="text-center text-muted py-4">
+                        <i class="fas fa-receipt fa-2x mb-2 d-block opacity-25"></i>
+                        No hay ventas hoy
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- Productos con stock bajo -->
+    <div class="col-md-5">
+        <div class="card">
+            <div class="card-header bg-danger text-white">
+                <i class="fas fa-exclamation-triangle me-2"></i>Productos stock bajo
+            </div>
+            <div class="card-body p-0">
+                @if (Model.ProductosStockBajo.Any())
+                {
+                    <table class="table table-hover mb-0">
+                        <thead>
+                            <tr>
+                                <th>Producto</th>
+                                <th class="text-center">Stock</th>
+                                <th class="text-center">Mínimo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var producto in Model.ProductosStockBajo)
+                            {
+                                <tr>
+                                    <td class="small fw-semibold">@producto.Nombre</td>
+                                    <td class="text-center">
+                                        <span class="badge bg-danger">@producto.Stock</span>
+                                    </td>
+                                    <td class="text-center text-muted small">
+                                        @producto.StockMinimo
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <div class="text-center text-muted py-4">
+                        <i class="fas fa-check-circle fa-2x mb-2 d-block text-success opacity-50"></i>
+                        Todo el stock en orden
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const labels = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Labels));
+        const dataVentas = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.DataVentas));
+
+        const ctx = document.getElementById('graficaVentas').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Ventas ($)',
+                    data: dataVentas,
+                    borderColor: '#0d6efd',
+                    backgroundColor: 'rgba(13, 110, 253, 0.1)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#0d6efd',
+                    pointRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: ctx => '$' + ctx.parsed.y.toFixed(2)
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: value => '$' + value.toFixed(0)
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+}

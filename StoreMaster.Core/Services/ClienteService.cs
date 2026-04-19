@@ -57,4 +57,7 @@ public class ClienteService : IClienteService
         await _repository.UpdateAsync(cliente);
         return (true, $"Cliente '{cliente.Nombre}' eliminado correctamente.");
     }
+
+    public async Task<int> GetTotalActivosAsync()
+        => await _repository.GetTotalActivosAsync();
 }

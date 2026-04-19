@@ -111,4 +111,15 @@ public class VentaService : IVentaService
 
         return (true, $"Venta #{venta.Id} cancelada. Stock restaurado.");
     }
+    public async Task<IEnumerable<Venta>> GetVentasUltimosDiasAsync(int dias = 7)
+    => await _ventaRepository.GetVentasUltimosDiasAsync(dias);
+
+    public async Task<IEnumerable<Venta>> GetVentasHoyAsync()
+        => await _ventaRepository.GetVentasHoyAsync();
+
+    public async Task<IEnumerable<Venta>> GetVentasPorRangoAsync(DateTime desde, DateTime hasta)
+        => await _ventaRepository.GetVentasPorRangoAsync(desde, hasta);
+
+    public async Task<IEnumerable<(string Cliente, decimal Total, int Transacciones)>> GetVentasPorClienteAsync()
+        => await _ventaRepository.GetVentasPorClienteAsync();
 }

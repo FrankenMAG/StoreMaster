@@ -10,4 +10,6 @@ public interface IClienteService
     Task<(bool Success, string Message)> CreateAsync(Cliente cliente);
     Task<(bool Success, string Message)> UpdateAsync(Cliente cliente);
     Task<(bool Success, string Message)> DeleteAsync(int id);
+    Task<int> GetTotalActivosAsync();
+
 }

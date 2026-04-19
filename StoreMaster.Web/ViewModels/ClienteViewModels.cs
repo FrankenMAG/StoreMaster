@@ -27,6 +27,24 @@ public class ClienteViewModel
     [Display(Name = "Dirección")]
     public string? Direccion { get; set; }
 
+    [MaxLength(255)]
+    [Display(Name = "RFC")]
+    public string? RFC { get; set; }
+
+
+    [MaxLength(255)]
+    [Display(Name = "Razón Social")]
+    public string? RazonSocial { get; set; }
+
+    [MaxLength(255)]
+    [Display(Name = "Regimen Fiscal")]
+    public string? RegimenFIscal { get; set; }
+
+    [MaxLength(255)]
+    [Display(Name = "Codigo Postal Fiscal")]
+    public string? CodigoPostalFiscal { get; set; }
+
+
     [Display(Name = "Activo")]
     public bool Activo { get; set; } = true;
 

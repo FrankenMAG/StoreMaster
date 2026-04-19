@@ -309,6 +309,9 @@ namespace StoreMaster.Infrastructure.Migrations
                     b.Property<string>("Apellido")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CodigoPostalFiscal")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreadoEn")
                         .HasColumnType("datetime2");
 
@@ -326,6 +329,15 @@ namespace StoreMaster.Infrastructure.Migrations
 
                     b.Property<string>("Nombre")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RFC")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RazonSocial")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RegimenFiscal")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Telefono")

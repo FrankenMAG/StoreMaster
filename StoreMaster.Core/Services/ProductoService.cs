@@ -100,4 +100,9 @@ public class ProductoService : IProductoService
         var tipo = esEntrada ? "entrada" : "salida";
         return (true, $"Stock actualizado. {tipo} de {cantidad} unidades. Stock actual: {producto.Stock}");
     }
+    public async Task<int> GetTotalActivosAsync()
+    => await _repository.GetTotalActivosAsync();
+
+    public async Task<IEnumerable<(string Nombre, int Total)>> GetTopProductosAsync(int top = 5)
+        => await _repository.GetTopProductosAsync(top);
 }
