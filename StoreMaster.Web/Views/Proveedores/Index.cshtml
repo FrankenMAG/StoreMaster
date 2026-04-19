@@ -14,7 +14,7 @@
 
 <div class="card">
     <div class="card-body p-0">
-        <table class="table table-hover mb-0">
+        <table class="table table-hover mb-0" id="tablaProveedores">
             <thead>
                 <tr>
                     <th>Nombre</th>
@@ -59,16 +59,25 @@
                         </td>
                     </tr>
                 }
-                @if (!Model.Any())
-                {
-                    <tr>
-                        <td colspan="6" class="text-center text-muted py-4">
-                            <i class="fas fa-inbox fa-2x mb-2 d-block"></i>
-                            No hay proveedores registrados
-                        </td>
-                    </tr>
-                }
+
             </tbody>
         </table>
     </div>
 </div>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#tablaProveedores').DataTable({
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.13.7/i18n/es-MX.json',
+                    emptyTable: 'No hay proveedores registrados'
+                },
+                pageLength: 10,
+                order: [[0, 'asc']],
+                columnDefs: [
+                    { orderable: false, targets: -1 }
+                ]
+            });
+        });
+    </script>
+}

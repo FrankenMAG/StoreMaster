@@ -6,6 +6,7 @@ using StoreMaster.Core.Services;
 using StoreMaster.Infrastructure.Data;
 using StoreMaster.Infrastructure.Repositories;
 using StoreMaster.Web.Mapping;
+using StoreMaster.Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,11 +20,20 @@ builder.Services.AddDbContext<StoreDbContext>(options =>
 // Repositorios
 builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
 builder.Services.AddScoped<IProveedorRepository, ProveedorRepository>();
+builder.Services.AddScoped<IProductoRepository, ProductoRepository>();
+builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
+builder.Services.AddScoped<IVentaRepository, VentaRepository>();
 
 // Servicios
 builder.Services.AddScoped<ICategoriaService, CategoriaService>();
 builder.Services.AddScoped<IProveedorService, ProveedorService>();
-
+builder.Services.AddScoped<IProductoService, ProductoService>();
+builder.Services.AddScoped<IFileService, FileService>();
+builder.Services.AddScoped<IVentaService, VentaService>();
+builder.Services.AddScoped<IClienteService, ClienteService>();
+// Sesión y carrito
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<CarritoService>();
 // Identity
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {
@@ -58,6 +68,14 @@ builder.Services.AddAutoMapper(cfg =>
 {
     cfg.AddProfile<MappingProfile>();
 });
+// Sesión para el carrito de ventas
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
 var app = builder.Build();
 
 // ── Pipeline HTTP ────────────────────────────────────────
@@ -72,6 +90,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthentication();
+app.UseSession(); 
 app.UseAuthorization();
 
 app.MapControllerRoute(

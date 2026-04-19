@@ -1,0 +1,210 @@
+﻿@{
+    ViewData["Title"] = "Punto de Venta";
+    var carrito = ViewBag.Carrito as StoreMaster.Core.Entities.Carrito ?? new StoreMaster.Core.Entities.Carrito();
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h4 class="mb-0 fw-bold">
+        <i class="fas fa-cash-register me-2 text-primary"></i>Punto de Venta
+    </h4>
+</div>
+
+<div class="row g-3">
+
+    <!-- ── BUSCADOR DE PRODUCTOS ──────────────────────── -->
+    <div class="col-md-7">
+        <div class="card h-100">
+            <div class="card-header bg-dark text-white">
+                <i class="fas fa-search me-2"></i>Buscar Producto
+            </div>
+            <div class="card-body">
+
+                <!-- Input de búsqueda -->
+                <div class="input-group mb-3">
+                    <span class="input-group-text"><i class="fas fa-barcode"></i></span>
+                    <input type="text" id="txtBuscar" class="form-control form-control-lg"
+                           placeholder="Nombre o código de barras..." autocomplete="off" />
+                </div>
+
+                <!-- Resultados de búsqueda -->
+                <div id="resultadosBusqueda"></div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ── CARRITO ────────────────────────────────────── -->
+    <div class="col-md-5">
+        <div class="card h-100">
+            <div class="card-header bg-dark text-white d-flex justify-content-between">
+                <span><i class="fas fa-shopping-cart me-2"></i>Carrito</span>
+                <span class="badge bg-primary" id="badgeTotalItems">
+                    @carrito.TotalItems
+                </span>
+            </div>
+            <div class="card-body p-0 d-flex flex-column">
+
+                <!-- Items del carrito -->
+                <div id="itemsCarrito" class="flex-grow-1" style="overflow-y: auto; max-height: 350px;">
+                    @await Html.PartialAsync("_CarritoItems", carrito)
+                </div>
+
+                <!-- Totales y confirmación -->
+                <div class="border-top p-3">
+                    <div class="d-flex justify-content-between mb-1">
+                        <span class="text-muted">Subtotal:</span>
+                        <span id="lblSubtotal">$@carrito.Subtotal.ToString("N2")</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-1">
+                        <span class="text-muted">IVA (16%):</span>
+                        <span id="lblImpuesto">$@carrito.Impuesto.ToString("N2")</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-3 fw-bold fs-5">
+                        <span>Total:</span>
+                        <span id="lblTotal" class="text-success">
+                            $@carrito.Total.ToString("N2")
+                        </span>
+                    </div>
+
+                    <!-- Cliente -->
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">
+                            <i class="fas fa-user me-1"></i>Cliente (opcional)
+                        </label>
+                        <select id="selectCliente" class="form-select">
+                            <option value="">-- Cliente general --</option>
+                            @foreach (var item in ViewBag.Clientes as IEnumerable<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem> ?? [])
+                            {
+                                <option value="@item.Value">@item.Text</option>
+                            }
+                        </select>
+                    </div>
+
+                    <!-- Botón confirmar -->
+                    <form asp-action="ConfirmarVenta" method="post" id="formConfirmar">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="clienteId" id="hiddenClienteId" />
+                        <button type="submit" class="btn btn-success w-100 py-2 fw-bold"
+                                id="btnConfirmar" @(carrito.Items.Any() ? "" : "disabled")>
+                            <i class="fas fa-check me-2"></i>Confirmar Venta
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        let buscarTimeout;
+
+        // ── Búsqueda con debounce ────────────────────────────
+        $('#txtBuscar').on('input', function () {
+            clearTimeout(buscarTimeout);
+            const termino = $(this).val().trim();
+
+            if (termino.length < 2) {
+                $('#resultadosBusqueda').html('');
+                return;
+            }
+
+            buscarTimeout = setTimeout(() => buscarProducto(termino), 300);
+        });
+
+        function buscarProducto(termino) {
+            $.post('/Ventas/BuscarProducto', { termino }, function (productos) {
+                if (productos.length === 0) {
+                    $('#resultadosBusqueda').html(
+                        '<p class="text-muted text-center py-3">No se encontraron productos</p>'
+                    );
+                    return;
+                }
+
+                let html = '<div class="list-group">';
+                productos.forEach(p => {
+                    const imagen = p.imagenUrl
+                        ? `/images/productos/${p.imagenUrl}`
+                        : '/images/placeholder.png';
+
+                    html += `
+                        <div class="list-group-item list-group-item-action d-flex align-items-center gap-3 py-2">
+                            <img src="${imagen}" style="width:45px;height:45px;object-fit:cover;border-radius:6px;" />
+                            <div class="flex-grow-1">
+                                <div class="fw-semibold">${p.nombre}</div>
+                                <div class="text-muted small">${p.categoriaNombre ?? ''} · Stock: ${p.stock}</div>
+                            </div>
+                            <div class="text-end">
+                                <div class="fw-bold text-success">$${p.precio.toFixed(2)}</div>
+                                <div class="input-group input-group-sm mt-1" style="width:100px;">
+                                    <input type="number" class="form-control text-center"
+                                           id="cant_${p.id}" value="1" min="1" max="${p.stock}" />
+                                    <button class="btn btn-primary btn-sm"
+                                            onclick="agregarAlCarrito(${p.id}, '${p.nombre}', ${p.precio}, '${p.imagenUrl ?? ''}')">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>`;
+                });
+                html += '</div>';
+                $('#resultadosBusqueda').html(html);
+            });
+        }
+
+        // ── Agregar al carrito ───────────────────────────────
+        function agregarAlCarrito(id, nombre, precio, imagenUrl) {
+            const cantidad = parseInt($(`#cant_${id}`).val()) || 1;
+
+            $.post('/Ventas/AgregarAlCarrito', {
+                productoId: id,
+                nombre,
+                precio,
+                cantidad,
+                imagenUrl
+            }, function (res) {
+                if (res.success) {
+                    actualizarCarrito();
+                    $('#txtBuscar').val('');
+                    $('#resultadosBusqueda').html('');
+                } else {
+                    alert(res.message);
+                }
+            });
+        }
+
+        // ── Eliminar del carrito ─────────────────────────────
+        function eliminarDelCarrito(productoId) {
+            $.post('/Ventas/EliminarDelCarrito', { productoId }, function (res) {
+                if (res.success) actualizarCarrito();
+            });
+        }
+
+        // ── Actualizar cantidad ──────────────────────────────
+        function actualizarCantidad(productoId, cantidad) {
+            $.post('/Ventas/ActualizarCantidad', { productoId, cantidad }, function (res) {
+                if (res.success) {
+                    $('#lblSubtotal').text('$' + res.subtotal);
+                    $('#lblImpuesto').text('$' + res.impuesto);
+                    $('#lblTotal').text('$' + res.total);
+                    actualizarCarrito();
+                }
+            });
+        }
+
+        // ── Recargar items del carrito ───────────────────────
+        function actualizarCarrito() {
+            $.get('/Ventas/ObtenerCarritoPartial', function (html) {
+                $('#itemsCarrito').html(html);
+                const carrito = JSON.parse($('#carritoData').val() || '{"totalItems":0,"total":"0.00"}');
+                $('#badgeTotalItems').text(carrito.totalItems);
+                $('#btnConfirmar').prop('disabled', carrito.totalItems === 0);
+            });
+        }
+
+        // ── Sincronizar cliente al confirmar ─────────────────
+        $('#formConfirmar').on('submit', function () {
+            $('#hiddenClienteId').val($('#selectCliente').val());
+        });
+    </script>
+}

@@ -16,7 +16,7 @@
 <!-- Tabla -->
 <div class="card">
     <div class="card-body p-0">
-        <table class="table table-hover mb-0">
+        <table class="table table-hover mb-0" id="tablaCategorias">
             <thead>
                 <tr>
                     <th>Nombre</th>
@@ -64,16 +64,25 @@
                         </td>
                     </tr>
                 }
-                @if (!Model.Any())
-                {
-                    <tr>
-                        <td colspan="5" class="text-center text-muted py-4">
-                            <i class="fas fa-inbox fa-2x mb-2 d-block"></i>
-                            No hay categorías registradas
-                        </td>
-                    </tr>
-                }
+
             </tbody>
         </table>
     </div>
 </div>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#tablaCategorias').DataTable({
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.13.7/i18n/es-MX.json',
+                    emptyTable: 'No hay categorias registradas'
+                },
+                pageLength: 10,
+                order: [[0, 'asc']],
+                columnDefs: [
+                    { orderable: false, targets: -1 }
+                ]
+            });
+        });
+    </script>
+}

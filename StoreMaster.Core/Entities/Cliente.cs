@@ -8,7 +8,7 @@ public class Cliente : BaseEntity
     public string? Email { get; set; }
     public string? Direccion { get; set; }
     public bool Activo { get; set; } = true;
-
+    public string NombreCompleto => $"{Nombre} {Apellido}".Trim();
     // Navegación
     public ICollection<Venta> Ventas { get; set; } = [];
 }

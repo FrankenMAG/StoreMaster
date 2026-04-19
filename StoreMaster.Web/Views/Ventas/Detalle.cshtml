@@ -1,0 +1,129 @@
+﻿@model StoreMaster.Core.Entities.Venta
+@{
+    ViewData["Title"] = $"Venta #{Model.Id}";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h4 class="mb-0 fw-bold">
+        <i class="fas fa-receipt me-2 text-primary"></i>Detalle Venta #@Model.Id
+    </h4>
+    <div class="d-flex gap-2">
+        @if (Model.Estado == StoreMaster.Core.Entities.EstadoVenta.Completada)
+        {
+            <form asp-action="Cancelar" asp-route-id="@Model.Id" method="post"
+                  onsubmit="return confirm('¿Cancelar esta venta y restaurar el stock?')">
+                @Html.AntiForgeryToken()
+                <button type="submit" class="btn btn-outline-danger">
+                    <i class="fas fa-times me-2"></i>Cancelar Venta
+                </button>
+            </form>
+        }
+        <a asp-action="Index" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-2"></i>Volver
+        </a>
+    </div>
+</div>
+
+<div class="row g-3">
+
+    <!-- Datos generales -->
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header bg-dark text-white">
+                <i class="fas fa-info-circle me-2"></i>Información
+            </div>
+            <div class="card-body">
+                <table class="table table-sm mb-0">
+                    <tr>
+                        <td class="text-muted">Número:</td>
+                        <td class="fw-bold">#@Model.Id</td>
+                    </tr>
+                    <tr>
+                        <td class="text-muted">Fecha:</td>
+                        <td>@Model.Fecha.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</td>
+                    </tr>
+                    <tr>
+                        <td class="text-muted">Cliente:</td>
+                        <td>@(Model.Cliente?.NombreCompleto ?? "Cliente General")</td>
+                    </tr>
+                    <tr>
+                        <td class="text-muted">Estado:</td>
+                        <td>
+                            @switch (Model.Estado)
+                            {
+                                case StoreMaster.Core.Entities.EstadoVenta.Completada:
+                                    <span class="badge bg-success">Completada</span>
+                                    break;
+                                case StoreMaster.Core.Entities.EstadoVenta.Cancelada:
+                                    <span class="badge bg-danger">Cancelada</span>
+                                    break;
+                                default:
+                                    <span class="badge bg-secondary">@Model.Estado</span>
+                                    break;
+                            }
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Totales -->
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header bg-dark text-white">
+                <i class="fas fa-dollar-sign me-2"></i>Totales
+            </div>
+            <div class="card-body">
+                <table class="table table-sm mb-0">
+                    <tr>
+                        <td class="text-muted">Subtotal:</td>
+                        <td class="text-end">$@Model.Subtotal.ToString("N2")</td>
+                    </tr>
+                    <tr>
+                        <td class="text-muted">IVA (16%):</td>
+                        <td class="text-end">$@Model.Impuesto.ToString("N2")</td>
+                    </tr>
+                    <tr class="fw-bold fs-5">
+                        <td>Total:</td>
+                        <td class="text-end text-success">$@Model.Total.ToString("N2")</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Productos -->
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header bg-dark text-white">
+                <i class="fas fa-box me-2"></i>Productos
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th class="text-center">Cantidad</th>
+                            <th class="text-end">Precio Unit.</th>
+                            <th class="text-end">Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var detalle in Model.Detalles)
+                        {
+                            <tr>
+                                <td>@detalle.Producto?.Nombre</td>
+                                <td class="text-center">@detalle.Cantidad</td>
+                                <td class="text-end">$@detalle.PrecioUnitario.ToString("N2")</td>
+                                <td class="text-end fw-bold">
+                                    $@((detalle.Cantidad * detalle.PrecioUnitario).ToString("N2"))
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
