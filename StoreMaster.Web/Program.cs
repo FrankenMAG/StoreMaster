@@ -16,6 +16,8 @@ builder.Services.AddControllersWithViews();
 
 // Base de datos según entorno
 // Base de datos
+var dbUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+Console.WriteLine($"DATABASE_URL: {dbUrl ?? "NULL"}");
 var rawConnectionString = Environment.GetEnvironmentVariable("DATABASE_URL")
     ?? builder.Configuration.GetConnectionString("DefaultConnection");
 
