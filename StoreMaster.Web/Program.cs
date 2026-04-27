@@ -1,3 +1,4 @@
+using Npgsql.EntityFrameworkCore.PostgreSQL;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using StoreMaster.Core.Entities;
@@ -13,9 +14,19 @@ var builder = WebApplication.CreateBuilder(args);
 // ── Servicios ────────────────────────────────────────────
 builder.Services.AddControllersWithViews();
 
-// Base de datos
+// Base de datos según entorno
+//if (builder.Environment.IsDevelopment())
+//{
+//builder.Services.AddDbContext<StoreDbContext>(options =>
+//    options.UseSqlServer(builder.Configuration
+//        .GetConnectionString("DefaultConnection")));
+////}
+//else
+//{
 builder.Services.AddDbContext<StoreDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(builder.Configuration
+        .GetConnectionString("DefaultConnection")));
+//}
 
 // Repositorios
 builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
