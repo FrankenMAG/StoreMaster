@@ -54,6 +54,13 @@ namespace StoreMaster.Web.Mapping
                 .ForMember(dest => dest.ModificadoEn, opt => opt.Ignore())
                 .ForMember(dest => dest.Ventas, opt => opt.Ignore());
 
+            // Factura  FacturaViewModel
+            CreateMap<Factura, FacturaViewModel>()
+                .ForMember(dest => dest.Conceptos,
+                    opt => opt.MapFrom(src => src.Conceptos));
+
+            CreateMap<FacturaConcepto, FacturaConceptoViewModel>();
+
         }
     }
 }

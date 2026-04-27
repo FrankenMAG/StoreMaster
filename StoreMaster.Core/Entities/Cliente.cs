@@ -12,6 +12,7 @@ public class Cliente : BaseEntity
     public string? RFC { get; set; }
     public string? RazonSocial { get; set; }
     public string? RegimenFiscal { get; set; }
+    public string? UsoCFDI { get; set; }
     public string? CodigoPostalFiscal { get; set; }
     public string NombreCompleto => $"{Nombre} {Apellido}".Trim();
     // Navegación

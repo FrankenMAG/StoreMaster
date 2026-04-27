@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StoreMaster.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using StoreMaster.Infrastructure.Data;
 namespace StoreMaster.Infrastructure.Migrations
 {
     [DbContext(typeof(StoreDbContext))]
-    partial class StoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260423025741_Factura_y_FacturaConcepto")]
+    partial class Factura_y_FacturaConcepto
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -410,9 +413,6 @@ namespace StoreMaster.Infrastructure.Migrations
                     b.Property<bool>("Eliminado")
                         .HasColumnType("bit");
 
-                    b.Property<int>("Estado")
-                        .HasColumnType("int");
-
                     b.Property<int?>("FacturaId")
                         .HasColumnType("int");
 
@@ -432,23 +432,11 @@ namespace StoreMaster.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("NombreReceptor")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("RFCEmisor")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("RFCReceptor")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("RegimenFiscalEmisor")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RegimenFiscalReceptor")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -767,7 +755,7 @@ namespace StoreMaster.Infrastructure.Migrations
             modelBuilder.Entity("StoreMaster.Core.Entities.FacturaConcepto", b =>
                 {
                     b.HasOne("StoreMaster.Core.Entities.FacturaConcepto", null)
-                        .WithMany("Conceptos")
+                        .WithMany("FacturasConceptos")
                         .HasForeignKey("FacturaConceptoId");
                 });
 
@@ -816,7 +804,7 @@ namespace StoreMaster.Infrastructure.Migrations
 
             modelBuilder.Entity("StoreMaster.Core.Entities.FacturaConcepto", b =>
                 {
-                    b.Navigation("Conceptos");
+                    b.Navigation("FacturasConceptos");
                 });
 
             modelBuilder.Entity("StoreMaster.Core.Entities.Producto", b =>

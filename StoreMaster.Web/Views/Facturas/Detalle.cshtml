@@ -1,4 +1,4 @@
-﻿@model StoreMaster.Core.Entities.Venta
+﻿@model StoreMaster.Web.ViewModels.FacturaViewModel
 @{
     ViewData["Title"] = $"Venta #{Model.Id}";
 }
@@ -8,21 +8,15 @@
         <i class="fas fa-receipt me-2 text-primary"></i>Detalle Venta #@Model.Id
     </h4>
     <div class="d-flex gap-2">
-        @if (Model.Estado == StoreMaster.Core.Entities.EstadoVenta.Completada)
+        @if (Model.Estado == StoreMaster.Core.Entities.EstadoFactura.Vigente)
         {
             <form asp-action="Cancelar" asp-route-id="@Model.Id" method="post"
-                  onsubmit="return confirm('¿Cancelar esta venta y restaurar el stock?')">
+                  onsubmit="return confirm('¿Cancelar esta factura?')">
                 @Html.AntiForgeryToken()
                 <button type="submit" class="btn btn-outline-danger">
-                    <i class="fas fa-times me-2"></i>Cancelar Venta
+                    <i class="fas fa-times me-2"></i>Cancelar Factura
                 </button>
             </form>
-        
-            <a asp-controller="Facturas" asp-action="Create"
-                      asp-route-ventaId="@Model.Id"
-                      class="btn btn-outline-primary">
-                <i class="fas fa-file-invoice me-2"></i>Generar Factura
-            </a>
         }
         <a asp-action="Index" class="btn btn-outline-secondary">
             <i class="fas fa-arrow-left me-2"></i>Volver
@@ -45,22 +39,22 @@
                         <td class="fw-bold">#@Model.Id</td>
                     </tr>
                     <tr>
-                        <td class="text-muted">Fecha:</td>
-                        <td>@Model.Fecha.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</td>
+                        <td class="text-muted">Fecha Emisión:</td>
+                        <td>@Model.FechaEmision.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</td>
                     </tr>
                     <tr>
                         <td class="text-muted">Cliente:</td>
-                        <td>@(Model.Cliente?.NombreCompleto ?? "Cliente General")</td>
+                        <td>@(Model.NombreReceptor ?? "Cliente General")</td>
                     </tr>
                     <tr>
                         <td class="text-muted">Estado:</td>
                         <td>
                             @switch (Model.Estado)
                             {
-                                case StoreMaster.Core.Entities.EstadoVenta.Completada:
-                                    <span class="badge bg-success">Completada</span>
+                                case StoreMaster.Core.Entities.EstadoFactura.Vigente:
+                                    <span class="badge bg-success">Vigente</span>
                                     break;
-                                case StoreMaster.Core.Entities.EstadoVenta.Cancelada:
+                                case StoreMaster.Core.Entities.EstadoFactura.Cancelada:
                                     <span class="badge bg-danger">Cancelada</span>
                                     break;
                                 default:
@@ -73,7 +67,6 @@
             </div>
         </div>
     </div>
-
     <!-- Totales -->
     <div class="col-md-4">
         <div class="card">
@@ -88,7 +81,7 @@
                     </tr>
                     <tr>
                         <td class="text-muted">IVA (16%):</td>
-                        <td class="text-end">$@Model.Impuesto.ToString("N2")</td>
+                        <td class="text-end">$@Model.IVA.ToString("N2")</td>
                     </tr>
                     <tr class="fw-bold fs-5">
                         <td>Total:</td>
@@ -99,31 +92,31 @@
         </div>
     </div>
 
-    <!-- Productos -->
+    <!-- Conceptos -->
     <div class="col-md-12">
         <div class="card">
             <div class="card-header bg-dark text-white">
-                <i class="fas fa-box me-2"></i>Productos
+                <i class="fas fa-box me-2"></i>Conceptos
             </div>
             <div class="card-body p-0">
                 <table class="table table-hover mb-0">
                     <thead>
                         <tr>
-                            <th>Producto</th>
+                            <th>Descripción</th>
                             <th class="text-center">Cantidad</th>
-                            <th class="text-end">Precio Unit.</th>
-                            <th class="text-end">Subtotal</th>
+                            <th class="text-end">Valor Unit.</th>
+                            <th class="text-end">Importe</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var detalle in Model.Detalles)
+                        @foreach (var detalle in Model.Conceptos)
                         {
                             <tr>
-                                <td>@detalle.Producto?.Nombre</td>
+                                <td>@detalle.Descripcion</td>
                                 <td class="text-center">@detalle.Cantidad</td>
-                                <td class="text-end">$@detalle.PrecioUnitario.ToString("N2")</td>
+                                <td class="text-end">$@detalle.ValorUnitario.ToString("N2")</td>
                                 <td class="text-end fw-bold">
-                                    $@((detalle.Cantidad * detalle.PrecioUnitario).ToString("N2"))
+                                    $@((detalle.Cantidad * detalle.ValorUnitario).ToString("N2"))
                                 </td>
                             </tr>
                         }
@@ -132,4 +125,7 @@
             </div>
         </div>
     </div>
+    
+
+    
 </div>

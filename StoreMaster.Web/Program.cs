@@ -23,6 +23,8 @@ builder.Services.AddScoped<IProveedorRepository, ProveedorRepository>();
 builder.Services.AddScoped<IProductoRepository, ProductoRepository>();
 builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
 builder.Services.AddScoped<IVentaRepository, VentaRepository>();
+builder.Services.AddScoped<IFacturaRepository, FacturaRepository>();
+
 
 // Servicios
 builder.Services.AddScoped<ICategoriaService, CategoriaService>();
@@ -31,6 +33,7 @@ builder.Services.AddScoped<IProductoService, ProductoService>();
 builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<IVentaService, VentaService>();
 builder.Services.AddScoped<IClienteService, ClienteService>();
+builder.Services.AddScoped<IFacturaService, FacturaService>();
 // Sesión y carrito
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<CarritoService>();
@@ -97,12 +100,12 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 // Crear roles y usuario admin al iniciar
-await SeedDatabase(app);
+await SeedDatabase(app, builder);
 
 app.Run();
 
 // ── Seed inicial ─────────────────────────────────────────
-static async Task SeedDatabase(WebApplication app)
+static async Task SeedDatabase(WebApplication app, WebApplicationBuilder? builder)
 {
     using var scope = app.Services.CreateScope();
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
@@ -130,7 +133,8 @@ static async Task SeedDatabase(WebApplication app)
             EmailConfirmed = true
         };
 
-        await userManager.CreateAsync(admin, "Admin123!");
-        await userManager.AddToRoleAsync(admin, "Admin");
+        var adminPassword = builder.Configuration["AdminPassword"] ?? "Admin123!";
+        await userManager.CreateAsync(admin, adminPassword);
+        
     }
 }

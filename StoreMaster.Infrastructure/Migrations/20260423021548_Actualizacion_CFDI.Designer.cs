@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StoreMaster.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using StoreMaster.Infrastructure.Data;
 namespace StoreMaster.Infrastructure.Migrations
 {
     [DbContext(typeof(StoreDbContext))]
-    partial class StoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260423021548_Actualizacion_CFDI")]
+    partial class Actualizacion_CFDI
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -389,158 +392,6 @@ namespace StoreMaster.Infrastructure.Migrations
                     b.ToTable("DetallesVenta");
                 });
 
-            modelBuilder.Entity("StoreMaster.Core.Entities.Factura", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ClienteId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CodigoPostalReceptor")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreadoEn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Eliminado")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("Estado")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("FacturaId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("FechaEmision")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Folio")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("IVA")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime?>("ModificadoEn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("NombreEmisor")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NombreReceptor")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RFCEmisor")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RFCReceptor")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RegimenFiscalEmisor")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RegimenFiscalReceptor")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Serie")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Subtotal")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("Total")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<Guid?>("UUID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("UsoCFDI")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("VentaId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FacturaId");
-
-                    b.ToTable("Facturas");
-                });
-
-            modelBuilder.Entity("StoreMaster.Core.Entities.FacturaConcepto", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<decimal>("Cantidad")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("ClaveProdServ")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ClaveUnidad")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreadoEn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Descripcion")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal?>("Descuento")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<bool>("Eliminado")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("FacturaConceptoId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("FacturaId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Importe")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("ImporteIVA")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime?>("ModificadoEn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("NoIdentificacion")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("TasaIVA")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("ValorUnitario")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FacturaConceptoId");
-
-                    b.ToTable("FacturasConcepto");
-                });
-
             modelBuilder.Entity("StoreMaster.Core.Entities.Producto", b =>
                 {
                     b.Property<int>("Id")
@@ -757,20 +608,6 @@ namespace StoreMaster.Infrastructure.Migrations
                     b.Navigation("Venta");
                 });
 
-            modelBuilder.Entity("StoreMaster.Core.Entities.Factura", b =>
-                {
-                    b.HasOne("StoreMaster.Core.Entities.Factura", null)
-                        .WithMany("Facturas")
-                        .HasForeignKey("FacturaId");
-                });
-
-            modelBuilder.Entity("StoreMaster.Core.Entities.FacturaConcepto", b =>
-                {
-                    b.HasOne("StoreMaster.Core.Entities.FacturaConcepto", null)
-                        .WithMany("Conceptos")
-                        .HasForeignKey("FacturaConceptoId");
-                });
-
             modelBuilder.Entity("StoreMaster.Core.Entities.Producto", b =>
                 {
                     b.HasOne("StoreMaster.Core.Entities.Categoria", "Categoria")
@@ -807,16 +644,6 @@ namespace StoreMaster.Infrastructure.Migrations
             modelBuilder.Entity("StoreMaster.Core.Entities.Cliente", b =>
                 {
                     b.Navigation("Ventas");
-                });
-
-            modelBuilder.Entity("StoreMaster.Core.Entities.Factura", b =>
-                {
-                    b.Navigation("Facturas");
-                });
-
-            modelBuilder.Entity("StoreMaster.Core.Entities.FacturaConcepto", b =>
-                {
-                    b.Navigation("Conceptos");
                 });
 
             modelBuilder.Entity("StoreMaster.Core.Entities.Producto", b =>

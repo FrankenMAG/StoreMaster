@@ -17,6 +17,8 @@ public class StoreDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<Cliente> Clientes { get; set; }
     public DbSet<Venta> Ventas { get; set; }
     public DbSet<DetalleVenta> DetallesVenta { get; set; }
+    public DbSet<Factura> Facturas { get; set; }
+    public DbSet<FacturaConcepto> FacturasConcepto { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -29,6 +31,8 @@ public class StoreDbContext : IdentityDbContext<ApplicationUser>
         modelBuilder.Entity<Cliente>().HasQueryFilter(c => !c.Eliminado);
         modelBuilder.Entity<Venta>().HasQueryFilter(v => !v.Eliminado);
         modelBuilder.Entity<DetalleVenta>().HasQueryFilter(d => !d.Eliminado);
+        modelBuilder.Entity<Factura>().HasQueryFilter(d=>  !d.Eliminado);
+        modelBuilder.Entity<FacturaConcepto>().HasQueryFilter(d => !d.Eliminado);
 
         // Precisión de decimales para columnas de dinero
         modelBuilder.Entity<Producto>()
@@ -53,6 +57,32 @@ public class StoreDbContext : IdentityDbContext<ApplicationUser>
 
         modelBuilder.Entity<DetalleVenta>()
             .Property(d => d.PrecioUnitario)
+            .HasColumnType("decimal(18,2)");
+        // Factura
+        modelBuilder.Entity<Factura>()
+            .Property(d => d.Subtotal)
+            .HasColumnType("decimal(18,2)");
+        modelBuilder.Entity<Factura>()
+            .Property(d => d.IVA)
+            .HasColumnType("decimal(18,2)");
+        modelBuilder.Entity<Factura>()
+            .Property(d => d.Total)
+            .HasColumnType("decimal(18,2)");
+        // FacturaConcepto
+        modelBuilder.Entity<FacturaConcepto>()
+            .Property(d => d.Cantidad)
+            .HasColumnType("decimal(18,2)");
+        modelBuilder.Entity<FacturaConcepto>()
+            .Property(d => d.ValorUnitario)
+            .HasColumnType("decimal(18,2)");
+        modelBuilder.Entity<FacturaConcepto>()
+            .Property(d => d.Importe)
+            .HasColumnType("decimal(18,2)");
+        modelBuilder.Entity<FacturaConcepto>()
+            .Property(d => d.TasaIVA)
+            .HasColumnType("decimal(18,2)");
+        modelBuilder.Entity<FacturaConcepto>()
+            .Property(d => d.ImporteIVA)
             .HasColumnType("decimal(18,2)");
 
         // Ignorar propiedad calculada (no es columna en BD)
