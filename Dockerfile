@@ -2,12 +2,12 @@
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
 
-COPY StoreMaster.sln .
+COPY StoreMaster.slnx .
 COPY StoreMaster.Web/StoreMaster.Web.csproj StoreMaster.Web/
 COPY StoreMaster.Core/StoreMaster.Core.csproj StoreMaster.Core/
 COPY StoreMaster.Infrastructure/StoreMaster.Infrastructure.csproj StoreMaster.Infrastructure/
 
-RUN dotnet restore StoreMaster.sln
+RUN dotnet restore StoreMaster.Web/StoreMaster.Web.csproj
 
 COPY . .
 
