@@ -15,18 +15,24 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 // Base de datos según entorno
-//if (builder.Environment.IsDevelopment())
-//{
-//builder.Services.AddDbContext<StoreDbContext>(options =>
-//    options.UseSqlServer(builder.Configuration
-//        .GetConnectionString("DefaultConnection")));
-////}
-//else
-//{
+// Base de datos
+var rawConnectionString = Environment.GetEnvironmentVariable("DATABASE_URL")
+    ?? builder.Configuration.GetConnectionString("DefaultConnection");
+
+// Convertir formato postgresql:// a formato Npgsql si es necesario
+string connectionString;
+if (rawConnectionString != null && rawConnectionString.StartsWith("postgresql://"))
+{
+    var uri = new Uri(rawConnectionString);
+    connectionString = $"Host={uri.Host};Port={uri.Port};Database={uri.AbsolutePath.TrimStart('/')};Username={uri.UserInfo.Split(':')[0]};Password={uri.UserInfo.Split(':')[1]}";
+}
+else
+{
+    connectionString = rawConnectionString ?? "";
+}
+
 builder.Services.AddDbContext<StoreDbContext>(options =>
-    options.UseNpgsql(builder.Configuration
-        .GetConnectionString("DefaultConnection")));
-//}
+    options.UseNpgsql(connectionString));
 
 // Repositorios
 builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
